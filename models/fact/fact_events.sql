@@ -5,7 +5,7 @@ WITH events AS (
         description AS event_description,
         created AS date_event_created,
         time AS event_start_date,
-        duration AS event_durantion_seconds,
+        duration AS event_duration_seconds,
         rsvp_limit,
         venue_id,
         status

@@ -99,7 +99,7 @@ models:
               field: venue_id
       - name: event_name
         description: The title of the event.
-      - name: description
+      - name: event_description
         description: The description of the event.
       - name: date_event_created
         description: Timestamp of the moment the event was created by the organiser.
