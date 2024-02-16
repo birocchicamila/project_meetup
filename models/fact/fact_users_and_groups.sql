@@ -1,14 +1,13 @@
-
-WITH USERS_AND_GROUPS AS (
+WITH users_and_groups AS (
     SELECT
-        REPLACE(GROUP_ID, '"', '') AS GROUP_ID,
-        USER_ID,
-        JOINED_TIMESTAMP
+        REPLACE(group_id, '"', '') AS group_id,
+        user_id,
+        joined_timestamp
     FROM
-            {{ ref('src_users') }}
+        {{ ref('src_users') }}
 )
-SELECT * FROM USERS_AND_GROUPS
+SELECT * FROM users_and_groups
 {% if is_incremental() %}
 WHERE
- JOINED_TIMESTAMP> (select max(JOINED_TIMESTAMP) from {{ this }})
+joined_timestamp > (SELECT MAX(joined_timestamp) FROM {{ this }})
 {% endif %}

@@ -1,12 +1,11 @@
-
-WITH USERS AS (
+WITH users AS (
     SELECT DISTINCT
-        USER_ID,
-        CITY,
-        COUNTRY,
-        HOMETOWN
+        user_id,
+        city AS user_city,
+        country AS user_country,
+        hometown AS user_hometown
     FROM
         {{ ref('src_users') }}
-        )
+)
 
-SELECT * FROM USERS
+SELECT * FROM users

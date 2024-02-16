@@ -1,17 +1,17 @@
-WITH RSVPS AS (
+WITH rsvps AS (
     SELECT DISTINCT
-    RESPONSE,
-    USER_ID,
-    RSVP_WHEN,
-    GUESTS,
-    GROUP_ID,
-    VENUE_ID
+        response AS rsvp_response,
+        user_id,
+        rsvp_when,
+        guests AS rsvp_guest,
+        group_id,
+        venue_id
     FROM
         {{ ref('src_events') }}
 )
 
-SELECT * FROM RSVPS
+SELECT * FROM rsvps
 {% if is_incremental() %}
 WHERE
- RSVP_WHEN> (select max(RSVP_WHEN) from {{ this }})
+rsvp_when > (SELECT MAX(rsvp_when) FROM {{ this }})
 {% endif %}
