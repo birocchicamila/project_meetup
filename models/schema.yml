@@ -1,0 +1,92 @@
+version: 2
+
+models:
+  - name: dim_groups
+    description: Cleansed table which contains Meet Up groups.
+    columns:
+      - name: GROUP_ID
+        tests: 
+          - unique
+          - not_null
+          - relationships: 
+              to: ref('dim_topics')
+              field: group_id
+
+
+
+  - name: dim_topics
+    description: Cleansed table which contains Meet Up topics.
+    columns:
+      - name: topic_id
+        tests: 
+          - unique
+          - not_null
+          
+
+  - name: dim_users
+    description: Cleansed table which contains Meet Up users.
+    columns:
+      - name: user_id
+        tests: 
+          - unique
+          - not_null
+
+  - name: dim_venues
+    description: Cleansed table which contains Meet Up venues.
+    columns:
+      - name: venue_id
+        tests: 
+          - unique
+          - not_null
+
+
+  - name: fact_events
+    description: Cleansed table which contains Meet Up events objects.
+    columns:
+      - name: GROUP_ID
+        tests: 
+          - relationships: 
+              to: ref('dim_groups')
+              field: group_id
+      - name: venue_id
+        tests: 
+          - relationships: 
+              to: ref('dim_venues')
+              field: venue_id
+
+  - name: fact_rsvps
+    description: Cleansed table which contains Meet Up RSVPS objects.
+    columns:
+      - name: GROUP_ID
+        tests: 
+          - relationships: 
+              to: ref('dim_groups')
+              field: group_id
+      - name: venue_id
+        tests: 
+          - relationships: 
+              to: ref('dim_venues')
+              field: venue_id
+      - name: user_id
+        tests: 
+          - relationships: 
+              to: ref('dim_users')
+              field: user_id
+      - name: response
+        tests: 
+          - accepted_values: 
+              values: ['yes','no','waitlist']
+
+  - name: fact_users_and_groups
+    description: Cleansed table which contains Users and Groups objects.
+    columns:
+      - name: GROUP_ID
+        tests: 
+          - relationships: 
+              to: ref('dim_groups')
+              field: group_id
+      - name: user_id
+        tests: 
+          - relationships: 
+              to: ref('dim_users')
+              field: user_id
