@@ -16,6 +16,6 @@ WITH events AS (
 SELECT * FROM events
 {% if is_incremental() %}
 WHERE
-created > (SELECT MAX(created) FROM {{ this }})
+date_event_created > (SELECT MAX(date_event_created) FROM {{ this }})
 {% endif %}
 
