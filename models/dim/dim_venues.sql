@@ -1,17 +1,16 @@
-WITH VENUES AS (
+WITH venues AS (
     SELECT
-        VENUE_ID,
-        VENUE_NAME,
-        CITY,
-        COUNTRY,
-        LATITUDE,
-        LONGITUDE
+        venue_id,
+        venue_name,
+        city AS venue_city,
+        country AS venue_country,
+        latitude AS venue_latitude,
+        longitude AS venue_longitude
     FROM
         {{ ref('src_venues') }}
 )
 
--- Select and transform data from the CTE
 SELECT
     *
 FROM
-    VENUES
+    venues
