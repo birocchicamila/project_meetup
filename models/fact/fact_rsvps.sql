@@ -10,7 +10,10 @@ WITH rsvps AS (
         {{ ref('src_events') }}
 )
 
-SELECT * FROM rsvps
+SELECT *,
+        ROW_NUMBER() OVER (PARTITION BY user_id,venue_id,group_id ORDER BY rsvp_when DESC)=1 AS is_latest_rsvp_when
+    
+     FROM rsvps
 {% if is_incremental() %}
 WHERE
 rsvp_when > (SELECT MAX(rsvp_when) FROM {{ this }})

@@ -1,8 +1,7 @@
 WITH events AS (
     SELECT DISTINCT
         group_id,
-        name AS event_name,
-        description AS event_description,
+        dim.event_id,
         created AS date_event_created,
         time AS event_start_date,
         duration AS event_duration_seconds,
@@ -10,10 +9,16 @@ WITH events AS (
         venue_id,
         status
     FROM
-        {{ ref('src_events') }}
+        {{ ref('src_events') }} 
+    LEFT JOIN  {{ ref('dim_events') }} dim ON name=event_name AND event_description=description
+
+   
 )
 
-SELECT * FROM events
+SELECT *,
+        ROW_NUMBER() OVER (PARTITION BY group_id,event_id,venue_id ORDER BY date_event_created,event_start_date DESC)=1 AS is_latest_status
+        
+     FROM events
 {% if is_incremental() %}
 WHERE
 date_event_created > (SELECT MAX(date_event_created) FROM {{ this }})

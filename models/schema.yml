@@ -82,6 +82,23 @@ models:
 
 
 
+  - name: dim_events
+    description: Cleansed table which contains Meet Up events.
+    columns:
+      - name: event_id
+        description: A unique identifier for this event.
+        tests: 
+          - unique
+          - not_null
+      - name: event_name
+        description: The name of the event.
+      - name: event_description
+        description: The description of the event.
+      - name: event_description_without_tags
+        description: The description of the event without HTML tags.
+
+
+
   - name: fact_events
     description: Cleansed table which contains Meet Up events objects.
     columns:
@@ -97,10 +114,12 @@ models:
           - relationships: 
               to: ref('dim_venues')
               field: venue_id
-      - name: event_name
-        description: The title of the event.
-      - name: event_description
-        description: The description of the event.
+      - name: event_id
+        description: The unique identifier of the event.
+        tests: 
+          - relationships: 
+              to: ref('dim_events')
+              field: event_id
       - name: date_event_created
         description: Timestamp of the moment the event was created by the organiser.
       - name: event_start_date
