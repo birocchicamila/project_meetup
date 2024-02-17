@@ -82,6 +82,23 @@ models:
 
 
 
+  - name: dim_events
+    description: Cleansed table which contains Meet Up events.
+    columns:
+      - name: event_id
+        description: A unique identifier for this event.
+        tests: 
+          - unique
+          - not_null
+      - name: event_name
+        description: The name of the event.
+      - name: event_description
+        description: The description of the event.
+      - name: event_description_without_tags
+        description: The description of the event without HTML tags.
+
+
+
   - name: fact_events
     description: Cleansed table which contains Meet Up events objects.
     columns:
@@ -97,10 +114,12 @@ models:
           - relationships: 
               to: ref('dim_venues')
               field: venue_id
-      - name: event_name
-        description: The title of the event.
-      - name: event_description
-        description: The description of the event.
+      - name: event_id
+        description: The unique identifier of the event.
+        tests: 
+          - relationships: 
+              to: ref('dim_events')
+              field: event_id
       - name: date_event_created
         description: Timestamp of the moment the event was created by the organiser.
       - name: event_start_date
@@ -111,7 +130,8 @@ models:
         description: The maximum number of YES RSVPs that this event will allow.
       - name: status
         description: The status of the event. Possible values include 'past' and 'upcoming', meaning the the event has already taken place or that the event is planned for the future respectively. 
-
+      - name: is_latest_status
+        description: Boolean column indicating if the status is the last one.
 
 
   - name: fact_rsvps
@@ -144,6 +164,8 @@ models:
         description: Timestamp of the moment the user gave their RSVP.
       - name: rsvp_guest
         description: If permitted, the number of guests that the user is planning to bring to the event.
+      - name: is_latest_rsvp_when
+        description: Boolean column indicating if the RSVP when is the last one.
 
 
 
