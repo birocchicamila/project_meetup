@@ -2,8 +2,10 @@ WITH events AS (
     SELECT DISTINCT
         group_id,
         dim.event_id,
-        created AS date_event_created,
-        time AS event_start_date,
+        created AS timestamp_event_created,
+        created::DATE AS date_event_created,
+        time AS event_start_timestamp,
+        time::DATE AS event_start_date,
         duration AS event_duration_seconds,
         rsvp_limit,
         venue_id,

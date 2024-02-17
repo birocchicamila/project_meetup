@@ -3,11 +3,14 @@ WITH rsvps AS (
         response AS rsvp_response,
         user_id,
         rsvp_when,
+        rsvp_when::DATE as date_rsvp_when,
         guests AS rsvp_guest,
         group_id,
-        venue_id
+        venue_id,
+        event_id
     FROM
         {{ ref('src_events') }}
+    LEFT JOIN  {{ ref('dim_events') }} dim ON name=event_name AND event_description=description
 )
 
 SELECT *,

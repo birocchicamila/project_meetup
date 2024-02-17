@@ -3,6 +3,7 @@ WITH events AS (
         name AS event_name,
         description AS event_description,
         regexp_replace(description, '<[^>]+>', '') AS event_description_without_tags
+
     FROM
         {{ ref('src_events') }}
 )
