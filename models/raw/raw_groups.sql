@@ -1,0 +1,12 @@
+    SELECT
+        CITY,
+        CREATED,
+        DESCRIPTION,
+        NAME,
+        LAT,
+        LON,
+        LINK,
+        GROUP_ID,
+        TOPICS
+    FROM
+        MEETUP.RAW.RAW_GROUPS

@@ -99,41 +99,6 @@ models:
 
 
 
-  - name: fact_events
-    description: Cleansed table which contains Meet Up events objects.
-    columns:
-      - name: group_id
-        description: The unique identifier of the group that organised this event.
-        tests: 
-          - relationships: 
-              to: ref('dim_groups')
-              field: group_id
-      - name: venue_id
-        description: Unique identifier of the venue where this event takes place (see below).
-        tests: 
-          - relationships: 
-              to: ref('dim_venues')
-              field: venue_id
-      - name: event_id
-        description: The unique identifier of the event.
-        tests: 
-          - relationships: 
-              to: ref('dim_events')
-              field: event_id
-      - name: date_event_created
-        description: Timestamp of the moment the event was created by the organiser.
-      - name: event_start_date
-        description: The timestamp of when the event will start (or has started).
-      - name: event_duration_seconds
-        description: The duration of the event, in seconds.
-      - name: rsvp_limit
-        description: The maximum number of YES RSVPs that this event will allow.
-      - name: status
-        description: The status of the event. Possible values include 'past' and 'upcoming', meaning the the event has already taken place or that the event is planned for the future respectively. 
-      - name: is_latest_status
-        description: Boolean column indicating if the status is the last one.
-
-
   - name: fact_rsvps
     description: Cleansed table which contains Meet Up RSVPS objects.
     columns:
@@ -149,6 +114,12 @@ models:
           - relationships: 
               to: ref('dim_venues')
               field: venue_id
+      - name: event_id
+        description: Unique identifier of the event.
+        tests: 
+          - relationships: 
+              to: ref('dim_events')
+              field: event_id
       - name: user_id
         description: The unique identifier of the user that RSVPed for this event.
         tests: 
@@ -166,23 +137,3 @@ models:
         description: If permitted, the number of guests that the user is planning to bring to the event.
       - name: is_latest_rsvp_when
         description: Boolean column indicating if the RSVP when is the last one.
-
-
-
-  - name: fact_users_and_groups
-    description: Cleansed table which contains Users and Groups objects.
-    columns:
-      - name: group_id
-        description: The unique identifier of the group that the user has joined.
-        tests: 
-          - relationships: 
-              to: ref('dim_groups')
-              field: group_id
-      - name: user_id
-        description: A unique identifier for this user.
-        tests: 
-          - relationships: 
-              to: ref('dim_users')
-              field: user_id
-      - name: joined_timestamp
-        description: Timestamp of the moment the user joined this group.

@@ -40,3 +40,5 @@ models:
         +on_schema_change: fail
       src:
         +materialized: ephemeral
+      raw:
+        +materialized: ephemeral

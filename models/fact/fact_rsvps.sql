@@ -7,14 +7,13 @@ WITH rsvps AS (
         guests AS rsvp_guest,
         group_id,
         venue_id,
-        event_id
+        md5(ifnull(name,'') || ifnull(description,'') ) as event_id
     FROM
         {{ ref('src_events') }}
-    LEFT JOIN  {{ ref('dim_events') }} dim ON name=event_name AND event_description=description
 )
 
 SELECT *,
-        ROW_NUMBER() OVER (PARTITION BY user_id,venue_id,group_id ORDER BY rsvp_when DESC)=1 AS is_latest_rsvp_when
+        ROW_NUMBER() OVER (PARTITION BY user_id,venue_id,group_id,event_id ORDER BY rsvp_when DESC)=1 AS is_latest_rsvp_when
     
      FROM rsvps
 {% if is_incremental() %}
