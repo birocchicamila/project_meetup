@@ -15,7 +15,7 @@ SELECT
     TO_TIMESTAMP_NTZ(RSVP.VALUE:when::VARCHAR/ 1000)::TIMESTAMP_NTZ(3) AS RSVP_WHEN,
     RSVP.VALUE:guests::NUMBER AS GUESTS
 FROM
-    {{ ref('raw_events') }},
+    {{ source('meetup','events')}},
     LATERAL FLATTEN(INPUT => RSVPS) AS RSVP)
 
 SELECT * FROM EVENTS

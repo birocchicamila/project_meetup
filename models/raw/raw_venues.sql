@@ -1,9 +1,0 @@
-    SELECT
-        VENUE_ID,
-        NAME,
-        CITY,
-        COUNTRY,
-        LAT,
-        LON
-    FROM
-        MEETUP.RAW.RAW_VENUES

@@ -7,7 +7,7 @@ WITH VENUES AS (
         CAST(LAT AS FLOAT) AS LATITUDE,
         CAST(LON AS FLOAT) AS LONGITUDE
     FROM
-        {{ ref('raw_venues') }}
+        {{ source('meetup','venues')}}
 )
 
 SELECT * FROM VENUES

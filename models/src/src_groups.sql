@@ -10,7 +10,7 @@ WITH GROUPS AS (
         GROUP_ID,
         TOPIC.VALUE::VARCHAR AS TOPIC
     FROM
-        MEETUP.RAW.RAW_GROUPS,
+        {{ source('meetup','groups')}},
         LATERAL FLATTEN(INPUT => TOPICS) AS TOPIC
 )
 
