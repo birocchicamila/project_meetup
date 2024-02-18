@@ -1,4 +1,6 @@
+-- Common Table Expression (CTE) named 'users'
 WITH users AS (
+    -- Selecting distinct user attributes from the source 'src_users'
     SELECT DISTINCT
         user_id,
         city AS user_city,
@@ -8,4 +10,5 @@ WITH users AS (
         {{ ref('src_users') }}
 )
 
+-- Final SELECT statement to retrieve all columns from the 'users' CTE
 SELECT * FROM users

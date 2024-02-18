@@ -1,4 +1,5 @@
 WITH groups AS (
+    -- Selecting distinct group attributes from the source 'src_groups'
     SELECT DISTINCT
         group_id,
         created AS group_date_created,
@@ -9,9 +10,9 @@ WITH groups AS (
         longitude AS group_longitude,
         link,
         city AS group_city
-        
     FROM
         {{ ref('src_groups') }}
 )
 
+-- Final SELECT statement to retrieve all columns from the 'groups' CTE
 SELECT * FROM groups

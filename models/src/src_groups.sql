@@ -1,4 +1,6 @@
-WITH GROUPS AS (
+-- Common Table Expression (CTE) named 'groups'
+WITH groups AS (
+    -- Selecting attributes from the source 'meetup' groups and flattening topics
     SELECT
         CITY,
         TO_TIMESTAMP_NTZ(CREATED / 1000)::TIMESTAMP_NTZ(3) AS CREATED,
@@ -10,8 +12,9 @@ WITH GROUPS AS (
         GROUP_ID,
         TOPIC.VALUE::VARCHAR AS TOPIC
     FROM
-        {{ source('meetup','groups')}},
+        {{ source('meetup', 'groups') }},
         LATERAL FLATTEN(INPUT => TOPICS) AS TOPIC
 )
 
-SELECT * FROM GROUPS
+-- Final SELECT statement to retrieve all columns from the 'groups' CTE
+SELECT * FROM groups
