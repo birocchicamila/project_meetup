@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: meetup
+    schema: raw
+    tables:
+      - name: events
+        identifier: raw_events
+      - name: users
+        identifier: raw_users
+      - name: venues
+        identifier: raw_venues
+      - name: groups
+        identifier: raw_groups
